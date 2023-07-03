@@ -44,7 +44,7 @@ const Phones = () => {
 
   if (products.length === 0) {
     return <div>No phones found</div>;
-  }
+  };
 
   return (
     <Container maxWidth="lg" style={{ margin: "1rem auto", marginTop: "5rem" }}>
