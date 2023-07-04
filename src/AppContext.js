@@ -3,8 +3,9 @@ import React, { createContext, useReducer, useEffect } from "react";
 const cases = {
   ADD_TO_CART: "ADD_TO_CART",
   REMOVE_FROM_CART: "REMOVE_FROM_CART",
-  INCREASE_QUANTITY: 'INCREASE_QUANTITY',
-  DECREASE_QUANTITY: 'DECREASE_QUANTITY',
+  INCREASE_QUANTITY: "INCREASE_QUANTITY",
+  DECREASE_QUANTITY: "DECREASE_QUANTITY",
+  CLEAR_CART: "CLEAR_CART",
 };
 
 export default cases;
@@ -75,6 +76,11 @@ const reducer = (state, action) => {
           })
           .filter((item) => item.quantity > 0),
       };
+    case cases.CLEAR_CART:
+      return {
+        ...state,
+        cartItems: [],
+      };
     default:
       return state;
   }
@@ -87,8 +93,12 @@ export const AppProvider = ({ children }) => {
     localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
   }, [state.cartItems]);
 
+  const clearCart = () => {
+    dispatch({ type: cases.CLEAR_CART });
+  };
+
   return (
-    <AppContext.Provider value={{ state, dispatch }}>
+    <AppContext.Provider value={{ state, dispatch, clearCart }}>
       {children}
     </AppContext.Provider>
   );
